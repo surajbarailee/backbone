@@ -1,8 +1,6 @@
 $(document).ready(function() {
-    var todoItems = new TodoItems([
-        new TodoItem({description : 'asdkh1'}),
-        new TodoItem({description : 'asdkh2'})
-    ]);
+    var todoItems = new TodoItems();
+    todoItems.fetch();
     var todoItemsView = new TodoItemsView({model : todoItems});
     $('body').append(todoItemsView.render().$el);
 });

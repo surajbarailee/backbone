@@ -5,7 +5,11 @@ var TodoItemsView = Backbone.View.extend({
         if(!(options && options.model))
             throw new Error('Model is not specified.');
         this.model.on('add',this.onAdd,this);
+        this.model.on('remove',this.onRemove,this);
+    },
 
+    onRemove:function(todoItem){
+        this.$('li#' + todoItem.id).remove();
     },
 
     onAdd:function (todoItem) {
@@ -32,8 +36,8 @@ var TodoItemsView = Backbone.View.extend({
         var $textBox = this.$('#newTodoItem');
         if ($textBox.val() === '') 
             return;
-        var item = new TodoItem({description:$textBox.val()});
-        this.model.add(item);
+        var item = new TodoItem({title:$textBox.val()});
+        this.model.create(todoItem)
         $textBox.val('');
     },
 
