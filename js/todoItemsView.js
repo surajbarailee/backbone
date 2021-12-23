@@ -19,36 +19,26 @@ var TodoItemsView = Backbone.View.extend({
 
 
     events:{
-        'click #addItem':'addItem',
         'keypress #newTodoItem':'onKeyPress'
     },
 
 
     onKeyPress:function (e) {
         if (e.keyCode == 13) {
-            this.addItem();
-        }
-    },
-
-
-    addItem:function () {
-
-        var $textBox = this.$('#newTodoItem');
-        if ($textBox.val() === '') 
-            return;
-        var item = new TodoItem({title:$textBox.val()});
-        this.model.create(todoItem)
-        $textBox.val('');
+            var $textBox = this.$('#newTodoItem');
+            if ($textBox.val() === '') 
+                return;
+            var item = new TodoItem({title:$textBox.val()});
+            this.model.create(item)
+            $textBox.val('');
+            }
     },
 
     render: function () {
-        var self = this;
-        this.$el.append("<input type= 'text' id='newTodoItem' autofocus/>");
-        this.$el.append("<button id='addItem'>Add Item</button>");
-        this.model.each(function(todoItem){
-            var todoItemView = new TodoItemView({model: todoItem});
-            self.$el.append(todoItemView.render().$el)
-        });
-        return this;
+		var template = $("#todoItemsTemplate").html();
+		var html = Mustache.render(template);
+		this.$el.html(html);
+
+		return this;
     }
 })
